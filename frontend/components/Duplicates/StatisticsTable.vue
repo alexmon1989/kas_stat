@@ -12,6 +12,7 @@
                  :per-page="perPage"
                  caption-top
                  ref="table"
+                 id="statistics-table"
         >
             <template v-slot:table-busy>
                 <div class="text-center my-2">
@@ -25,7 +26,9 @@
             <template v-slot:custom-foot>
                 <b-tr>
                     <b-td colspan="9" variant="secondary" class="text-right">
-                        <b-button size="sm">Експорт у Excel</b-button>
+                        <b-button size="sm"
+                                  @click="excelExport('statistics-table', 'Статистика', 'statistics.xls')"
+                        >Експорт у Excel</b-button>
                     </b-td>
                 </b-tr>
             </template>
@@ -45,9 +48,11 @@
 
 <script>
     import axios from 'axios';
+    import mixin from './../../mixins.js';
 
     export default {
         props: ['dateFrom', 'dateTo'],
+        mixins: [mixin],
         data() {
             return {
                 fields: [

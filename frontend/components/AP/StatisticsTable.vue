@@ -5,7 +5,7 @@
             <b-spinner class="ml-2"></b-spinner>
         </div>
 
-        <b-table-simple small caption-top responsive striped bordered v-else>
+        <b-table-simple small caption-top responsive striped bordered v-else id="statistics-table">
             <caption>Статистичні дані щодо розгляду заявок на реєстрацію АП за період від {{ dateFrom | moment("DD.MM.YYYY") }} до {{ dateTo | moment("DD.MM.YYYY") }}</caption>
             <b-thead class="text-center">
                 <b-tr>
@@ -66,7 +66,9 @@
             <b-tfoot>
                 <b-tr>
                     <b-td colspan="9" variant="secondary" class="text-right">
-                        <b-button size="sm">Експорт у Excel</b-button>
+                        <b-button size="sm"
+                                  @click="excelExport('statistics-table', 'Статистика', 'statistics.xls')"
+                        >Експорт у Excel</b-button>
                     </b-td>
                 </b-tr>
             </b-tfoot>
@@ -76,9 +78,11 @@
 
 <script>
     import axios from 'axios';
+    import mixin from './../../mixins.js';
 
     export default {
         props: ['dateFrom', 'dateTo'],
+        mixins: [mixin],
 
         data() {
             return {

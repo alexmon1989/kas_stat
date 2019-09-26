@@ -1,5 +1,5 @@
 <template>
-    <b-table-simple small caption-top responsive striped bordered>
+    <b-table-simple small caption-top responsive striped bordered id="statistics-table">
         <caption>Реєстр адмінпослуг: "за підготовку до державної реєстрації", період: від {{ dateFrom | moment("DD.MM.YYYY") }} до {{ dateTo | moment("DD.MM.YYYY") }}</caption>
         <b-thead class="text-center">
             <b-tr>
@@ -33,7 +33,9 @@
         <b-tfoot>
             <b-tr>
                 <b-td colspan="9" variant="secondary" class="text-right">
-                    <b-button size="sm">Експорт у Excel</b-button>
+                    <b-button size="sm"
+                              @click="excelExport('statistics-table', 'Статистика', 'statistics.xls')"
+                    >Експорт у Excel</b-button>
                 </b-td>
             </b-tr>
         </b-tfoot>
@@ -41,8 +43,11 @@
 </template>
 
 <script>
+    import mixin from './../../mixins.js';
+
     export default {
         props: ['dateFrom', 'dateTo'],
+        mixins: [mixin],
         data() {
             return {
                 statistics: [

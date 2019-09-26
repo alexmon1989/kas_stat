@@ -36,7 +36,9 @@
             <b-tfoot>
                 <b-tr>
                     <b-td colspan="7" variant="secondary" class="text-right">
-                        <b-button size="sm" @click="excelExport('statistics-table', 'Статистика', 'obj_types.xls')">Експорт у Excel</b-button>
+                        <b-button size="sm"
+                                  @click="excelExport('statistics-table', 'Статистика', 'obj_types.xls')"
+                        >Експорт у Excel</b-button>
                     </b-td>
                 </b-tr>
             </b-tfoot>
