@@ -20,7 +20,7 @@
                 </div>
             </template>
 
-            <template v-slot:table-caption>Видача дублікатів / внесення змін</template>
+            <template v-slot:table-caption>Видача дублікатів / внесення змін за період від {{ dateFrom | moment("DD.MM.YYYY") }} до {{ dateTo | moment("DD.MM.YYYY") }}</template>
 
             <template v-slot:custom-foot>
                 <b-tr>

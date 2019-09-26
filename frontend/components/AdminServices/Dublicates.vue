@@ -1,6 +1,6 @@
 <template>
     <b-table-simple small caption-top responsive striped bordered>
-        <caption>За видачу дубліката свідоцтва:</caption>
+        <caption>Реєстр адмінпослуг: "за видачу дубліката свідоцтва", період: від {{ dateFrom | moment("DD.MM.YYYY") }} до {{ dateTo | moment("DD.MM.YYYY") }}</caption>
         <b-thead class="text-center">
             <b-tr>
                 <b-th rowspan="2">№ з/п</b-th>

@@ -6,7 +6,7 @@
         </div>
 
         <b-table-simple small caption-top responsive striped bordered v-else>
-            <caption>Статистичні дані щодо розгляду заявок на реєстрацію АП:</caption>
+            <caption>Статистичні дані щодо розгляду заявок на реєстрацію АП за період від {{ dateFrom | moment("DD.MM.YYYY") }} до {{ dateTo | moment("DD.MM.YYYY") }}</caption>
             <b-thead class="text-center">
                 <b-tr>
                     <b-th rowspan="3">Суб'єкт авторського права, який подав заявку</b-th>

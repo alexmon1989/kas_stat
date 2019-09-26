@@ -6,7 +6,7 @@
         </div>
 
         <b-table-simple small caption-top responsive striped bordered v-else>
-            <caption>Статистика за територіями</caption>
+            <caption>Статистика за територіями за період від {{ dateFrom | moment("DD.MM.YYYY") }} до {{ dateTo | moment("DD.MM.YYYY") }}</caption>
             <b-thead class="text-center">
                 <b-tr>
                     <b-th rowspan="2">Регіон</b-th>
