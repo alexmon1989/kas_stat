@@ -107,22 +107,25 @@
         },
         watch: {
             region() {
-                this.totalRows = 1;
-                this.currentPage = 1;
-                this.$refs.table.refresh();
+                this.refreshTable();
             },
             obj_type() {
-                this.totalRows = 1;
-                this.currentPage = 1;
-                this.$refs.table.refresh();
+                this.refreshTable();
             },
             legal_type() {
+                this.refreshTable();
+            },
+        },
+        mounted() {
+            window.scrollTo(0,document.body.scrollHeight);
+        },
+        methods: {
+            refreshTable() {
                 this.totalRows = 1;
                 this.currentPage = 1;
                 this.$refs.table.refresh();
             },
-        },
-        methods: {
+
             // Получение списка заявок с сервера
             getItems(ctx) {
                 let promise = axios.get('/api/dg_specialist_workload_claims/', {

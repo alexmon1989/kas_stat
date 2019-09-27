@@ -101,17 +101,23 @@
         },
         watch: {
             appType() {
-                this.totalRows = 1;
-                this.currentPage = 1;
-                this.$refs.table.refresh();
+                this.refreshTable();
             },
             specialistName() {
+                this.refreshTable();
+            }
+        },
+        mounted() {
+            window.scrollTo(0,document.body.scrollHeight);
+        },
+        methods: {
+            refreshTable() {
                 this.totalRows = 1;
                 this.currentPage = 1;
                 this.$refs.table.refresh();
-            }
-        },
-        methods: {
+                window.scrollTo(0,document.body.scrollHeight);
+            },
+
             // Получение списка заявок с сервера
             getItems(ctx) {
                 let promise = axios.get('/api/ap_specialist_workload_claims/', {
