@@ -23,7 +23,7 @@
                 </b-tr>
             </b-thead>
             <b-tbody class="text-center">
-                <b-tr v-for="item in statistics">
+                <b-tr v-for="item in statistics" :key="item.obj_type">
                     <b-td>{{ item.obj_type }}</b-td>
                     <b-td><a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'claims_ap')">{{ item.claims.ap }}</a></b-td>
                     <b-td><a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'claims_dg')">{{ item.claims.dg }}</a></b-td>

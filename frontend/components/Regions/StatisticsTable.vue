@@ -47,7 +47,7 @@
                 </b-tr>
             </b-thead>
             <b-tbody class="text-center">
-                <b-tr v-for="item in statistics">
+                <b-tr v-for="item in statistics" :key="item.region">
                     <b-td>{{ item.region }}</b-td>
                     <b-td><a href="#" @click.prevent="$emit('show-apps', item.region, 'ap', 'phys')">{{ item.applicants.ap.phys }}</a></b-td>
                     <b-td><a href="#" @click.prevent="$emit('show-apps', item.region, 'ap', 'jur')">{{ item.applicants.ap.jur }}</a></b-td>
