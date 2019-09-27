@@ -9,7 +9,11 @@
         ></statistics-table>
 
         <div v-if="appType">
-            <applications-table-header-title class="mt-5" :app-type="appType"></applications-table-header-title>
+            <applications-table-header-title
+                    class="mt-5"
+                    :app-type="appType"
+                    v-on:close-app-table="onHideApps"
+            ></applications-table-header-title>
             <applications-table
                     class="mt-3"
                     :app-type="appType"
@@ -56,6 +60,10 @@
                     this.dateFrom = dateFrom;
                     this.dateTo = dateTo;
                 });
+            },
+
+            onHideApps: function () {
+                this.appType = '';
             }
         },
     }

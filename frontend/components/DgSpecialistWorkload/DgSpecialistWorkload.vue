@@ -10,6 +10,7 @@
 
         <div v-if="showApps">
             <applications-table-header-title
+                    v-on:close-app-table="onHideApps"
                     class="mt-5"
                     :app-type="appType"
                     :specialist-name="specialistName"
@@ -65,6 +66,10 @@
                     this.dateFrom = dateFrom;
                     this.dateTo = dateTo;
                 });
+            },
+
+            onHideApps: function () {
+                this.showApps = false;
             }
         },
     }

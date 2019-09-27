@@ -10,10 +10,11 @@
 
         <div v-if="region">
             <persons-table-header-title
-                    class="mt-3"
+                    class="mt-5"
                     :region="region"
                     :obj_type="obj_type"
                     :legal_type="legal_type"
+                    v-on:close-persons-table="onHidePersons"
             ></persons-table-header-title>
             <persons-table
                     class="mt-3"
@@ -66,6 +67,10 @@
                     this.dateFrom = dateFrom;
                     this.dateTo = dateTo;
                 });
+            },
+
+            onHidePersons: function () {
+                this.region = '';
             }
         },
     }

@@ -9,8 +9,13 @@
         ></statistics-table>
 
         <div v-if="appType && objType">
-            <div class="text-center">
+            <div class="d-flex justify-content-between mt-5">
                 <h5>Перелік заявок</h5>
+                <b-button pill
+                          variant="outline-danger"
+                          size="sm"
+                          @click="onHideApps()"
+                >&times; Закрити</b-button>
             </div>
 
             <applications-table
@@ -60,6 +65,11 @@
                     this.dateFrom = dateFrom;
                     this.dateTo = dateTo;
                 });
+            },
+
+            onHideApps: function () {
+                this.appType = '';
+                this.objType = '';
             }
         },
     }

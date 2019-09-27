@@ -13,6 +13,7 @@
                     class="mt-5"
                     :app-type="appType"
                     :specialist-name="specialistName"
+                    v-on:close-app-table="onHideApps"
             ></applications-table-header-title>
 
             <applications-table
@@ -67,6 +68,10 @@
                     this.dateFrom = dateFrom;
                     this.dateTo = dateTo;
                 });
+            },
+
+            onHideApps: function () {
+                this.showApps = false;
             }
         },
     }

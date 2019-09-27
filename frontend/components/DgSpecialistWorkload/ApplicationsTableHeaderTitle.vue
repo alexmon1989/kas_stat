@@ -1,6 +1,11 @@
 <template>
-    <div class="text-center">
+    <div class="d-flex justify-content-between">
         <h5>{{ appTableHeaderTitle }}</h5>
+        <b-button pill
+                  variant="outline-danger"
+                  size="sm"
+                  @click="$emit('close-app-table')"
+        >&times; Закрити</b-button>
     </div>
 </template>
 
