@@ -1,0 +1,10 @@
+[Unit]
+Description=Unit for starting a kas_stat service
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/home/developer/projects/kas_stat/backend
+ExecStart=/home/developer/projects/kas_stat/.env/bin/gunicorn kas_stat.wsgi -b 0.0.0.0:8000
+
+[Install]
+WantedBy=multi-user.target

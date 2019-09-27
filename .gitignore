@@ -114,3 +114,4 @@ venv.bak/
 /frontend/node_modules/
 /frontend/package-lock.json
 /frontend/bundles/
+/config/kas_stat.service
