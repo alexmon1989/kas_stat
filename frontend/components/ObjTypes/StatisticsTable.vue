@@ -25,11 +25,19 @@
             <b-tbody class="text-center">
                 <b-tr v-for="item in statistics" :key="item.obj_type">
                     <b-td>{{ item.obj_type }}</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'claims_ap')">{{ item.claims.ap }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'claims_dg')">{{ item.claims.dg }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': objType === item.obj_type && appType === 'claims_ap'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'claims_ap')">{{ item.claims.ap }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': objType === item.obj_type && appType === 'claims_dg'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'claims_dg')">{{ item.claims.dg }}</a>
+                    </b-td>
                     <b-td>{{ getClaimsTotal(item) }}</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'registrations_ap')">{{ item.registrations.ap }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'registrations_dg')">{{ item.registrations.dg }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': objType === item.obj_type && appType === 'registrations_ap'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'registrations_ap')">{{ item.registrations.ap }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': objType === item.obj_type && appType === 'registrations_dg'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.obj_type, 'registrations_dg')">{{ item.registrations.dg }}</a>
+                    </b-td>
                     <b-td>{{ getRegistrationsTotal(item) }}</b-td>
                 </b-tr>
             </b-tbody>
@@ -51,7 +59,7 @@
     import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
-        props: ['dateFrom', 'dateTo'],
+        props: ['dateFrom', 'dateTo', 'appType', 'objType'],
         mixins: [ExcelMixin],
 
         data() {

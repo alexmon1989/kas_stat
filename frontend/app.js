@@ -1,3 +1,5 @@
+import './scss/styles.scss';
+
 import 'es6-promise/auto';
 import 'babel-polyfill';
 import 'bootstrap/dist/css/bootstrap.css'

@@ -35,9 +35,15 @@
             </b-thead>
             <b-tbody class="text-center">
                 <b-tr v-for="item in statistics" :key="item.name">
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', '', item.name)">{{ item.name }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'applied', item.name)">{{ item.applied }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'reviewed', item.name)">{{ item.reviewed }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === '' && specialistName === item.name }">
+                        <a href="#" @click.prevent="$emit('show-apps', '', item.name)">{{ item.name }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'applied' && specialistName === item.name }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'applied', item.name)">{{ item.applied }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'reviewed' && specialistName === item.name }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'reviewed', item.name)">{{ item.reviewed }}</a>
+                    </b-td>
                     <b-td>{{ item.reviewing }}</b-td>
                     <b-td>{{ item.average_time }}</b-td>
                     <b-td>{{ item.registrations }}</b-td>
@@ -81,7 +87,7 @@
     import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
-        props: ['dateFrom', 'dateTo'],
+        props: ['dateFrom', 'dateTo', 'appType', 'specialistName'],
         mixins: [ExcelMixin],
 
         data() {

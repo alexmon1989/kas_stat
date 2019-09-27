@@ -49,10 +49,18 @@
             <b-tbody class="text-center">
                 <b-tr v-for="item in statistics" :key="item.region">
                     <b-td>{{ item.region }}</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.region, 'ap', 'phys')">{{ item.applicants.ap.phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.region, 'ap', 'jur')">{{ item.applicants.ap.jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.region, 'dg', 'phys')">{{ item.applicants.dg.phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', item.region, 'dg', 'jur')">{{ item.applicants.dg.jur }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': region === item.region && obj_type === 'ap' && legal_type === 'phys'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.region, 'ap', 'phys')">{{ item.applicants.ap.phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': region === item.region && obj_type === 'ap' && legal_type === 'jur'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.region, 'ap', 'jur')">{{ item.applicants.ap.jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': region === item.region && obj_type === 'dg' && legal_type === 'phys'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.region, 'dg', 'phys')">{{ item.applicants.dg.phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': region === item.region && obj_type === 'dg' && legal_type === 'jur'}">
+                        <a href="#" @click.prevent="$emit('show-apps', item.region, 'dg', 'jur')">{{ item.applicants.dg.jur }}</a>
+                    </b-td>
                     <b-td>{{ getCountApplicants(item) }}</b-td>
                     <b-td>{{ item.claims.ap.phys }}</b-td>
                     <b-td>{{ item.claims.ap.jur }}</b-td>
@@ -102,7 +110,7 @@
     import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
-        props: ['dateFrom', 'dateTo'],
+        props: ['dateFrom', 'dateTo', 'region', 'obj_type', 'legal_type'],
         mixins: [ExcelMixin],
 
         data() {

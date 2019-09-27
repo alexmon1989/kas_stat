@@ -6,6 +6,9 @@
                           v-on:show-apps="onShowApps"
                           :date-from="dateFrom"
                           :date-to="dateTo"
+                          :region="region"
+                          :obj_type="obj_type"
+                          :legal_type="legal_type"
         ></statistics-table>
 
         <div v-if="region">

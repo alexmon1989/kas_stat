@@ -6,6 +6,8 @@
                           v-on:show-apps="onShowApps"
                           :date-from="dateFrom"
                           :date-to="dateTo"
+                          :app-type="appType"
+                          :specialist-name="specialistName"
         ></statistics-table>
 
         <div v-if="showApps">

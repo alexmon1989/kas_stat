@@ -31,25 +31,53 @@
             <b-tbody class="text-center">
                 <b-tr>
                     <b-td>Фізичні особи</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'applied_phys')">{{ statistics.applied_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'registered_phys')">{{ statistics.registered_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'without_review_phys')">{{ statistics.without_review_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'refusal_phys')">{{ statistics.refusal_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'return_phys')">{{ statistics.return_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'canceled_phys')">{{ statistics.canceled_phys }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'applied_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'applied_phys')">{{ statistics.applied_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'registered_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'registered_phys')">{{ statistics.registered_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'without_review_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'without_review_phys')">{{ statistics.without_review_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'refusal_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'refusal_phys')">{{ statistics.refusal_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'return_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'return_phys')">{{ statistics.return_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'canceled_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'canceled_phys')">{{ statistics.canceled_phys }}</a>
+                    </b-td>
                     <b-td>{{ considered_phys_sum }}</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'issued_phys')">{{ statistics.issued_phys }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'issued_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'issued_phys')">{{ statistics.issued_phys }}</a>
+                    </b-td>
                 </b-tr>
                 <b-tr>
                     <b-td>Юридичні особи</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'applied_jur')">{{ statistics.applied_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'registered_jur')">{{ statistics.registered_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'without_review_jur')">{{ statistics.without_review_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'refusal_jur')">{{ statistics.refusal_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'return_jur')">{{ statistics.return_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'canceled_jur')">{{ statistics.canceled_jur }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'applied_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'applied_jur')">{{ statistics.applied_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'registered_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'registered_jur')">{{ statistics.registered_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'without_review_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'without_review_jur')">{{ statistics.without_review_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'refusal_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'refusal_jur')">{{ statistics.refusal_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'return_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'return_jur')">{{ statistics.return_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'canceled_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'canceled_jur')">{{ statistics.canceled_jur }}</a>
+                    </b-td>
                     <b-td>{{ considered_jur_sum }}</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'issued_jur')">{{ statistics.issued_jur }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'issued_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'issued_jur')">{{ statistics.issued_jur }}</a>
+                    </b-td>
                 </b-tr>
                 <b-tr>
                     <b-td>Всього</b-td>
@@ -81,7 +109,7 @@
     import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
-        props: ['dateFrom', 'dateTo'],
+        props: ['dateFrom', 'dateTo', 'appType'],
         mixins: [ExcelMixin],
 
         data() {

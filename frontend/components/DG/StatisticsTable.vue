@@ -36,39 +36,79 @@
                 <b-tr>
                     <b-td rowspan="2">Передача (відчуження)</b-td>
                     <b-td>Фізичні особи</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_applied_phys')">{{ statistics.alienation_applied_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_registered_phys')">{{ statistics.alienation_registered_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_without_review_phys')">{{ statistics.alienation_without_review_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_refusal_phys')">{{ statistics.alienation_refusal_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_return_phys')">{{ statistics.alienation_return_phys }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_applied_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_applied_phys')">{{ statistics.alienation_applied_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_registered_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_registered_phys')">{{ statistics.alienation_registered_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_without_review_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_without_review_phys')">{{ statistics.alienation_without_review_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_refusal_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_refusal_phys')">{{ statistics.alienation_refusal_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_return_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_return_phys')">{{ statistics.alienation_return_phys }}</a>
+                    </b-td>
                     <b-td>{{ considered_alienation_phys_sum }}</b-td>
                 </b-tr>
                 <b-tr>
                     <b-td>Юридичні особи</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_applied_jur')">{{ statistics.alienation_applied_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_registered_jur')">{{ statistics.alienation_registered_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_without_review_jur')">{{ statistics.alienation_without_review_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_refusal_jur')">{{ statistics.alienation_refusal_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'alienation_return_jur')">{{ statistics.alienation_return_jur }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_applied_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_applied_jur')">{{ statistics.alienation_applied_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_registered_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_registered_jur')">{{ statistics.alienation_registered_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_without_review_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_without_review_jur')">{{ statistics.alienation_without_review_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_refusal_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_refusal_jur')">{{ statistics.alienation_refusal_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'alienation_return_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'alienation_return_jur')">{{ statistics.alienation_return_jur }}</a>
+                    </b-td>
                     <b-td>{{ considered_alienation_jur_sum }}</b-td>
                 </b-tr>
                 <b-tr>
                     <b-td rowspan="2">Передача на використання</b-td>
                     <b-td>Фізичні особи</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_applied_phys')">{{ statistics.using_applied_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_registered_phys')">{{ statistics.using_registered_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_without_review_phys')">{{ statistics.using_without_review_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_refusal_phys')">{{ statistics.using_refusal_phys }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_return_phys')">{{ statistics.using_return_phys }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_applied_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_applied_phys')">{{ statistics.using_applied_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_registered_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_registered_phys')">{{ statistics.using_registered_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_without_review_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_without_review_phys')">{{ statistics.using_without_review_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_refusal_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_refusal_phys')">{{ statistics.using_refusal_phys }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_return_phys' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_return_phys')">{{ statistics.using_return_phys }}</a>
+                    </b-td>
                     <b-td>{{ considered_using_phys_sum }}</b-td>
                 </b-tr>
                 <b-tr>
                     <b-td>Юридичні особи</b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_applied_jur')">{{ statistics.using_applied_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_registered_jur')">{{ statistics.using_registered_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_without_review_jur')">{{ statistics.using_without_review_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_refusal_jur')">{{ statistics.using_refusal_jur }}</a></b-td>
-                    <b-td><a href="#" @click.prevent="$emit('show-apps', 'using_return_jur')">{{ statistics.using_return_jur }}</a></b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_applied_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_applied_jur')">{{ statistics.using_applied_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_registered_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_registered_jur')">{{ statistics.using_registered_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_without_review_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_without_review_jur')">{{ statistics.using_without_review_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_refusal_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_refusal_jur')">{{ statistics.using_refusal_jur }}</a>
+                    </b-td>
+                    <b-td :class="{ 'bg-info text-white': appType === 'using_return_jur' }">
+                        <a href="#" @click.prevent="$emit('show-apps', 'using_return_jur')">{{ statistics.using_return_jur }}</a>
+                    </b-td>
                     <b-td>{{ considered_using_jur_sum }}</b-td>
                 </b-tr>
                 <b-tr>
@@ -100,7 +140,7 @@
     import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
-        props: ['dateFrom', 'dateTo'],
+        props: ['dateFrom', 'dateTo', 'appType'],
         mixins: [ExcelMixin],
 
         data() {
