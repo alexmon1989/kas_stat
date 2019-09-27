@@ -45,11 +45,11 @@
 </template>
 
 <script>
-    import mixin from './../../mixins.js';
+    import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
         props: ['dateFrom', 'dateTo'],
-        mixins: [mixin],
+        mixins: [ExcelMixin],
         data() {
             return {
                 statistics: [

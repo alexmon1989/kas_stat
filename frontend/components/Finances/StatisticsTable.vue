@@ -140,10 +140,10 @@
 </template>
 
 <script>
-    import mixin from './../../mixins.js';
+    import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
-        mixins: [mixin],
+        mixins: [ExcelMixin],
         props: ['dateFrom', 'dateTo'],
         data() {
             return {

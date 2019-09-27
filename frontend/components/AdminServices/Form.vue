@@ -23,10 +23,12 @@
 </template>
 
 <script>
-    import DatePicker from 'vue2-datepicker'
+    import DatePicker from 'vue2-datepicker';
+    import DateFormMixin from './../../mixins/DateFormMixin';
 
     export default {
         components: {DatePicker},
+        mixins: [DateFormMixin],
         data() {
             return {
                 from: '',
@@ -75,6 +77,14 @@
                     }
                 }
             }
-        }
+        },
+
+        methods: {
+            onKeyUp(e) {
+                if (e.which === 13) {
+                    this.$emit('send-date-form', this.from, this.to, this.registry);
+                }
+            }
+        },
     }
 </script>

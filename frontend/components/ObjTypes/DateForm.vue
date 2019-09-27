@@ -19,10 +19,12 @@
 </template>
 
 <script>
-    import DatePicker from 'vue2-datepicker'
+    import DatePicker from 'vue2-datepicker';
+    import DateFormMixin from './../../mixins/DateFormMixin';
 
     export default {
         components: {DatePicker},
+        mixins: [DateFormMixin],
         data() {
             return {
                 from: '',

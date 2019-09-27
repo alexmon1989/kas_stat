@@ -1,4 +1,4 @@
-import {tableToExcel} from  './utils.js'
+import {tableToExcel} from  './../utils.js'
 
 export default {
     methods: {
