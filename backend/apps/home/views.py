@@ -3,8 +3,8 @@ from django.db.models import Sum, Prefetch, Count
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics, exceptions
-from .models import StatisticsValues, LsClaimList, ClPersonList, ClOap, LsEventList
-from .serializers import ClaimsSerializer
+from .models import StatisticsValues, LsClaimList, ClPersonList, ClOap, LsEventList, ClRegion
+from .serializers import ClaimsSerializer, ClPersonListSerializer
 
 
 def ap(request):
@@ -890,6 +890,230 @@ def dg_specialist_workload_statistics(request):
 
 def regions(request):
     return render(request, 'home/regions.html')
+
+
+@api_view(['GET'])
+def regions_statistics(request):
+    statistics = list()
+
+    applicants_ap_phys = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id=7,
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=0,
+    ).annotate(
+        Count('statisticsvalues__claim__persons', distinct=True)
+    ).order_by(
+        'region'
+    )
+    applicants_ap_phys = {item['region']: item['statisticsvalues__claim__persons__count'] for item in applicants_ap_phys}
+
+    applicants_ap_jur = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id=7,
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=1,
+    ).annotate(
+        Count('statisticsvalues__claim__persons', distinct=True)
+    ).order_by(
+        'region'
+    )
+    applicants_ap_jur = {item['region']: item['statisticsvalues__claim__persons__count'] for item in applicants_ap_jur}
+
+    applicants_dg_phys = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id=8,
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=0,
+    ).annotate(
+        Count('statisticsvalues__claim__persons', distinct=True)
+    ).order_by(
+        'region'
+    )
+    applicants_dg_phys = {item['region']: item['statisticsvalues__claim__persons__count'] for item in applicants_dg_phys}
+
+    applicants_dg_jur = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id=8,
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=1,
+    ).annotate(
+        Count('statisticsvalues__claim__persons', distinct=True)
+    ).order_by(
+        'region'
+    )
+    applicants_dg_jur = {item['region']: item['statisticsvalues__claim__persons__count'] for item in applicants_dg_jur}
+
+    claims_ap_phys = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id__in=(1, 2),
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=0
+    ).annotate(
+        Sum('statisticsvalues__value')
+    ).order_by(
+        'region'
+    )
+    claims_ap_phys = {item['region']: item['statisticsvalues__value__sum'] for item in claims_ap_phys}
+
+    claims_ap_jur = ClRegion.objects.values(
+        'region'
+    ).filter(
+        statisticsvalues__cert_id__in=(1, 2),
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=1
+    ).annotate(
+        Sum('statisticsvalues__value')
+    ).order_by(
+        'region'
+    )
+    claims_ap_jur = {item['region']: item['statisticsvalues__value__sum'] for item in claims_ap_jur}
+
+    claims_dg_phys = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id__in=(3, 4),
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=0
+    ).annotate(
+        Sum('statisticsvalues__value')
+    ).order_by(
+        'region'
+    )
+    claims_dg_phys = {item['region']: item['statisticsvalues__value__sum'] for item in claims_dg_phys}
+
+    claims_dg_jur = ClRegion.objects.values(
+        'region'
+    ).filter(
+        statisticsvalues__cert_id__in=(3, 4),
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        statisticsvalues__legalkind_id=1
+    ).annotate(
+        Sum('statisticsvalues__value')
+    ).order_by(
+        'region'
+    )
+    claims_dg_jur = {item['region']: item['statisticsvalues__value__sum'] for item in claims_dg_jur}
+
+    registrations_ap = ClRegion.objects.values(
+        'region',
+    ).filter(
+        statisticsvalues__cert_id=5,
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to']
+    ).annotate(
+        Sum('statisticsvalues__value')
+    ).order_by(
+        'region'
+    )
+    registrations_ap = {item['region']: item['statisticsvalues__value__sum'] for item in registrations_ap}
+
+    registrations_dg = ClRegion.objects.values(
+        'region'
+    ).filter(
+        statisticsvalues__cert_id=6,
+        statisticsvalues__timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        statisticsvalues__timekey__fulldatealternatekey__lte=request.GET['date_to']
+    ).annotate(
+        Sum('statisticsvalues__value')
+    ).order_by(
+        'region'
+    )
+    registrations_dg = {item['region']: item['statisticsvalues__value__sum'] for item in registrations_dg}
+
+    cl_regions = ClRegion.objects.filter(
+        active=True
+    ).order_by('region')
+
+    for region in cl_regions:
+        statistics.append(
+            {
+                "region": region.region,
+                "applicants": {
+                    "ap": {
+                        "phys": applicants_ap_phys.get(region.region, 0),
+                        "jur": applicants_ap_jur.get(region.region, 0),
+                    },
+                    "dg": {
+                        "phys": applicants_dg_phys.get(region.region, 0),
+                        "jur": applicants_dg_jur.get(region.region, 0),
+                    }
+                },
+                "claims": {
+                    "ap": {
+                        "phys": claims_ap_phys.get(region.region, 0),
+                        "jur": claims_ap_jur.get(region.region, 0),
+                    },
+                    "dg": {
+                        "phys": claims_dg_phys.get(region.region, 0),
+                        "jur": claims_dg_jur.get(region.region, 0),
+                    }
+                },
+                "registrations": {
+                    "ap": registrations_ap.get(region.region, 0),
+                    "dg": registrations_dg.get(region.region, 0)
+                },
+                "budget": {
+                    "ap": 0,
+                    "dg": 0
+                }
+            }
+        )
+
+    return Response(statistics)
+
+
+class RegionsPersonsListView(generics.ListAPIView):
+    serializer_class = ClPersonListSerializer
+
+    def get_queryset(self):
+        date_from = self.request.query_params.get('date_from', None)
+        date_to = self.request.query_params.get('date_to', None)
+        region = self.request.query_params.get('region', None)
+        obj_type = self.request.query_params.get('obj_type', None)
+        legal_type = self.request.query_params.get('legal_type', None)
+        if obj_type == 'ap':
+            cert_id = 7
+        else:
+            cert_id = 8
+        if legal_type == 'phys':
+            legalkind_id = 0
+        else:
+            legalkind_id = 1
+
+        qyeryset = ClPersonList.objects.prefetch_related(
+            Prefetch(
+                'claims',
+                queryset=LsClaimList.objects.filter(
+                    statisticsvalues__timekey__fulldatealternatekey__gte=date_from,
+                    statisticsvalues__timekey__fulldatealternatekey__lte=date_to,
+                    statisticsvalues__region__region=region,
+                    statisticsvalues__cert_id=cert_id,
+                    statisticsvalues__legalkind_id=legalkind_id,
+                )
+            ),
+        ).filter(
+            claims__statisticsvalues__timekey__fulldatealternatekey__gte=date_from,
+            claims__statisticsvalues__timekey__fulldatealternatekey__lte=date_to,
+            claims__statisticsvalues__region__region=region,
+            claims__statisticsvalues__cert_id=cert_id,
+            claims__statisticsvalues__legalkind_id=legalkind_id,
+        ).distinct()
+
+        return qyeryset
 
 
 def finances(request):

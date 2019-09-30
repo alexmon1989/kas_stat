@@ -115,7 +115,7 @@
 
         data() {
             return {
-                isBusy: false,
+                isBusy: true,
                 statistics: [
                     {
                         region: 'Регіон1',
@@ -317,13 +317,13 @@
 
         created() {
             // Загрузка статистических данных
-            //this.getStatisticsData();
+            this.getStatisticsData();
         },
 
         methods: {
             getStatisticsData: function () {
                 this.isBusy = true;
-                axios.get('/api/statistics/dg_specialist_workload_statistics/', {
+                axios.get('/api/statistics/regions/', {
                     params: {
                         date_from: this.dateFrom.toISOString().split('T')[0],
                         date_to: this.dateTo.toISOString().split('T')[0],

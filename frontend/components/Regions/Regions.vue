@@ -63,6 +63,7 @@
             },
 
             onShowStatistics: function (dateFrom, dateTo) {
+                this.region = '';
                 this.dateFrom = '';
                 this.dateTo = '';
 

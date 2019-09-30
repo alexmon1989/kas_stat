@@ -31,6 +31,7 @@ class StatisticsValues(models.Model):
     claim = models.ForeignKey('LsClaimList', models.DO_NOTHING, db_column='claim_id', blank=True, null=True)
     objtype = models.ForeignKey('ClObjtypes', models.DO_NOTHING, db_column='obj_type_id')
     legalkind_id = models.IntegerField(db_column='legalKind_id', blank=True, null=True)  # Field name made lowercase.
+    region = models.ForeignKey('ClRegion', on_delete=models.DO_NOTHING, blank=True, null=True, db_column='id_region')
 
     class Meta:
         managed = False
@@ -115,6 +116,7 @@ class ClPersonList(models.Model):
     birth_day = models.DateField(blank=True, null=True)
     address_codes = models.CharField(max_length=255, blank=True, null=True)
     address_type = models.CharField(max_length=255, blank=True, null=True)
+    claims = models.ManyToManyField('LsClaimList', through='LinkClaimPersons')
 
     class Meta:
         managed = False
@@ -212,3 +214,13 @@ class LinkClaimOap(models.Model):
     class Meta:
         managed = False
         db_table = 'link_claim_OAP'
+
+
+class ClRegion(models.Model):
+    id_region = models.AutoField(primary_key=True)
+    region = models.CharField(unique=True, max_length=255, blank=True, null=True)
+    active = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'cl_regions'

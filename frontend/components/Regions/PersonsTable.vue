@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-table :fields="fields"
-                 :items="items"
+                 :items="getItems"
                  striped
                  bordered
                  responsive="sm"
@@ -18,8 +18,8 @@
                 </div>
             </template>
 
-            <template v-slot:cell(name)="row">
-                <a href="#" @click.prevent="row.toggleDetails">{{ row.item.name || '-' }}</a>
+            <template v-slot:cell(full_name)="row">
+                <a href="#" @click.prevent="row.toggleDetails">{{ row.item.full_name || '-' }}</a>
             </template>
 
             <template v-slot:row-details="row">
@@ -27,7 +27,7 @@
                 <ul>
                     <li v-for="item in row.item.claims">
                         <a :href="'//spec.authors.ukrpatent.org/claims/claim?id=' + item.idclaim"
-                           target="_blank">{{ item.app_number }}</a>
+                           target="_blank">{{ item.claim_number }}</a>
                     </li>
                 </ul>
             </template>
@@ -53,8 +53,8 @@
         data() {
             return {
                 fields: [
-                    {key: 'name', label: 'ФІО/назва заявника'},
-                    {key: 'claims_count', label: 'Кількість поданих заяв'},
+                    {key: 'full_name', label: 'ФІО/назва заявника'},
+                    {key: 'total_claims', label: 'Кількість поданих заяв'},
                     {key: 'budget_enrolled', label: 'Зараховані кошти'},
                     {key: 'budget_not_enrolled', label: 'Незараховані кошти'},
                 ],
@@ -124,16 +124,18 @@
                 this.totalRows = 1;
                 this.currentPage = 1;
                 this.$refs.table.refresh();
+                window.scrollTo(0,document.body.scrollHeight);
             },
 
             // Получение списка заявок с сервера
             getItems(ctx) {
-                let promise = axios.get('/api/dg_specialist_workload_claims/', {
+                let promise = axios.get('/api/statistics/regions_persons/', {
                     params: {
-                        appType: this.appType,
-                        specialistName: this.specialistName,
                         date_from: this.dateFrom.toISOString().split('T')[0],
                         date_to: this.dateTo.toISOString().split('T')[0],
+                        region: this.region,
+                        obj_type: this.obj_type,
+                        legal_type: this.legal_type,
                         page: ctx.currentPage,
                     }
                 });

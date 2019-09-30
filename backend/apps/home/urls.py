@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (ap, ap_statistics, ApClaimsListView, dg, dg_statistics, DgClaimsListView, ap_specialist_workload,
                     ap_specialist_workload_statistics, ap_specialist_workload_claims, dg_specialist_workload,
-                    dg_specialist_workload_statistics, regions, finances, obj_types, admin_services, duplicates,
-                    obj_types_statistics, ObjTypesClaimsListView)
+                    dg_specialist_workload_statistics, regions, regions_statistics, finances, obj_types, admin_services,
+                    duplicates, obj_types_statistics, ObjTypesClaimsListView, RegionsPersonsListView)
 
 
 urlpatterns = [
@@ -22,6 +22,9 @@ urlpatterns = [
     path('api/statistics/dg_specialist_workload_statistics/', dg_specialist_workload_statistics),
 
     path('regions/', regions),
+    path('api/statistics/regions/', regions_statistics),
+    path('api/statistics/regions_persons/', RegionsPersonsListView.as_view()),
+
     path('finances/', finances),
 
     path('obj_types/', obj_types),

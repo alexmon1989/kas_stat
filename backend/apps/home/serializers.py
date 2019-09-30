@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import LsClaimList, LsEventList, ClOap
+from .models import LsClaimList, LsEventList, ClOap, ClPersonList
 
 
 class LsEventListSerializer(serializers.ModelSerializer):
@@ -24,3 +24,23 @@ class ClaimsSerializer(serializers.ModelSerializer):
         model = LsClaimList
         fields = '__all__'
         depth = 5
+
+
+class PersonsClaimsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LsClaimList
+        fields = ['idclaim', 'claim_number']
+
+
+class ClPersonListSerializer(serializers.ModelSerializer):
+    claims = PersonsClaimsSerializer(many=True, read_only=True)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['total_claims'] = len(ret['claims'])
+        return ret
+
+    class Meta:
+        model = ClPersonList
+        fields = ['claims', 'full_name']
+        depth = 2
