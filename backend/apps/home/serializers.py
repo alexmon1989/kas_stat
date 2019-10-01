@@ -23,7 +23,7 @@ class ClaimsSerializer(serializers.ModelSerializer):
     class Meta:
         model = LsClaimList
         fields = '__all__'
-        depth = 5
+        depth = 1
 
 
 class PersonsClaimsSerializer(serializers.ModelSerializer):
