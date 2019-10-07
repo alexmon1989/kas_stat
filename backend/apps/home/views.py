@@ -74,13 +74,18 @@ class ApClaimsListView(generics.ListAPIView):
         queryset = LsClaimList.objects.prefetch_related(
             Prefetch(
                 'persons',
-                queryset=ClPersonList.objects.filter(linkclaimpersons__id_type_person__in=(1, 5))
+                queryset=ClPersonList.objects.filter(linkclaimpersons__id_type_person__in=(1, 5)).prefetch_related(
+                    Prefetch('claims'),
+                )
             ),
             Prefetch(
                 'objtype'
             ),
             Prefetch(
-                'oap'
+                'oap',
+                queryset=ClOap.objects.prefetch_related(
+                    Prefetch('id_oap_type'),
+                )
             ),
             Prefetch(
                 'events',
@@ -91,7 +96,7 @@ class ApClaimsListView(generics.ListAPIView):
             ),
         ).filter(
             objtype_id__in=(1, 2)
-        ).order_by('appnumber')
+        ).order_by('claim_number')
 
         # Дата від
         date_from = self.request.query_params.get('date_from', None)
@@ -244,7 +249,7 @@ class DgClaimsListView(generics.ListAPIView):
                      Prefetch('event_type'),
                  )
             ),
-        ).order_by('appnumber')
+        ).order_by('claim_number')
 
         # Дата від
         date_from = self.request.query_params.get('date_from', None)
@@ -1094,7 +1099,7 @@ class RegionsPersonsListView(generics.ListAPIView):
         else:
             legalkind_id = 1
 
-        qyeryset = ClPersonList.objects.prefetch_related(
+        queryset = ClPersonList.objects.prefetch_related(
             Prefetch(
                 'claims',
                 queryset=LsClaimList.objects.filter(
@@ -1111,9 +1116,9 @@ class RegionsPersonsListView(generics.ListAPIView):
             claims__statisticsvalues__region__region=region,
             claims__statisticsvalues__cert_id=cert_id,
             claims__statisticsvalues__legalkind_id=legalkind_id,
-        ).distinct()
+        ).order_by('full_name').distinct()
 
-        return qyeryset
+        return queryset
 
 
 def finances(request):

@@ -1,13 +1,12 @@
 <template>
     <div>
-        <b-table :items="getItems"
+        <b-table :items="items"
                  :fields="fields"
+                 :busy="isBusy"
                  striped
                  responsive="sm"
                  empty-text="Заявки відсутні"
                  show-empty
-                 :current-page="currentPage"
-                 :per-page="perPage"
                  ref="table"
         >
             <template v-slot:table-busy>
@@ -34,6 +33,15 @@
             </template>
         </b-table>
 
+        <b-row>
+            <b-col class="my-1 d-flex justify-content-end">
+                <button class="btn btn-primary"
+                        @click="getItems(true)"
+                        :disabled="isBusy"
+                        v-if="isMoreBtnShowed">Завантажити ще</button>
+            </b-col>
+        </b-row>
+
         <b-row class="justify-content-center" v-if="totalRows > perPage">
             <b-col sm="7" md="6" class="my-1">
                 <b-pagination v-model="currentPage"
@@ -57,6 +65,7 @@
         },
         data() {
             return {
+                isBusy: true,
                 fields: [
                     {key: 'app_number', label: '№ заявки'},
                     {key: 'subject', label: 'Суб\'єкт АП, який подає заявку'},
@@ -65,29 +74,64 @@
                 totalRows: 1,
                 currentPage: 1,
                 perPage: 10,
+                items: [],
+                loadMorePressed: false,
             }
         },
         watch: {
             appType() {
+                this.items = [];
+                this.loadMorePressed = 0;
                 this.totalRows = 1;
                 this.currentPage = 1;
-                this.$refs.table.refresh();
+                this.getItems();
+            },
+            currentPage() {
+                if (!this.loadMorePressed) {
+                    this.getItems();
+                }
+            }
+        },
+        mounted() {
+            this.getItems();
+        },
+        computed: {
+            isMoreBtnShowed() {
+                return this.totalRows > this.currentPage * this.perPage;
             }
         },
         methods: {
             // Получение списка заявок с сервера
-            getItems(ctx) {
-                let promise = axios.get('/api/ap_claims/', {
+            getItems(more=false) {
+                this.isBusy = true;
+                if (more) {
+                    this.loadMorePressed = true;
+                    this.currentPage++;
+                }
+
+                axios.get('/api/ap_claims/', {
                     params: {
                         appType: this.appType,
                         date_from: this.dateFrom.toISOString().split('T')[0],
                         date_to: this.dateTo.toISOString().split('T')[0],
-                        page: ctx.currentPage,
+                        page: this.currentPage,
                     }
-                });
-                return promise.then((response) => {
+                }).then((response) => {
                     this.totalRows = response.data.count;
-                    return(response.data.results || []);
+
+                    if (more) {
+                        let items = response.data.results || [];
+                        this.items.push(...items);
+
+                    } else {
+                        this.items = response.data.results || [];
+                    }
+
+                    this.isBusy = false;
+                    this.loadMorePressed = false;
+                    this.$nextTick(function () {
+                        window.scrollTo(0,document.body.scrollHeight);
+                    });
                 });
             },
 
