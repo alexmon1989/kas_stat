@@ -1250,7 +1250,7 @@ class ObjTypesClaimsListView(generics.ListAPIView):
             ),
         ).filter(
             objtype_id__in=(1, 2)
-        ).order_by('appnumber')
+        ).order_by('claim_number')
 
         # Дата від
         date_from = self.request.query_params.get('date_from', None)

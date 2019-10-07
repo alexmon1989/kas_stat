@@ -1,13 +1,12 @@
 <template>
     <div>
-        <b-table :items="getItems"
+        <b-table :items="items"
                  :fields="fields"
+                 :busy="isBusy"
                  striped
                  responsive="sm"
                  empty-text="Заявки відсутні"
                  show-empty
-                 :current-page="currentPage"
-                 :per-page="perPage"
                  ref="table"
                  id="applications-table"
         >
@@ -39,7 +38,13 @@
             <b-col class="my-1 d-flex justify-content-end">
                 <button class="btn btn-secondary"
                         @click="excelExport('applications-table', 'Заявки', 'applications.xls', false)"
+                        :disabled="isBusy"
                 >Експорт у Excel</button>
+
+                <button class="btn btn-primary ml-2"
+                        @click="getItems(true)"
+                        :disabled="isBusy"
+                        v-if="isMoreBtnShowed">Завантажити ще</button>
             </b-col>
         </b-row>
 
@@ -68,6 +73,7 @@
         },
         data() {
             return {
+                isBusy: true,
                 fields: [
                     {key: 'app_number', label: '№ заявки'},
                     {key: 'subject', label: ''},
@@ -75,7 +81,9 @@
                 ],
                 totalRows: 1,
                 currentPage: 1,
-                perPage: 10
+                perPage: 10,
+                items: [],
+                loadMorePressed: false,
             }
         },
         watch: {
@@ -85,9 +93,19 @@
             objType() {
                 this.refreshTable();
             },
+            currentPage() {
+                if (!this.loadMorePressed) {
+                    this.getItems();
+                }
+            }
         },
         mounted() {
-            window.scrollTo(0,document.body.scrollHeight);
+            this.getItems();
+        },
+        computed: {
+            isMoreBtnShowed() {
+                return this.totalRows > this.currentPage * this.perPage;
+            }
         },
         methods: {
             refreshTable() {
@@ -98,25 +116,43 @@
                     this.fields[1]['label'] = 'Сторона договору, яка подає заявку';
                     this.fields[2]['label'] = 'Об\'єкт АП';
                 }
+                this.items = [];
+                this.loadMorePressed = 0;
                 this.totalRows = 1;
                 this.currentPage = 1;
-                this.$refs.table.refresh();
-                window.scrollTo(0,document.body.scrollHeight);
+                this.getItems();
             },
 
             // Получение списка заявок с сервера
-            getItems(ctx) {
-                let promise = axios.get('/api/obj_types_claims/', {
+            getItems(more=false) {
+                this.isBusy = true;
+                if (more) {
+                    this.loadMorePressed = true;
+                    this.currentPage++;
+                }
+
+                axios.get('/api/obj_types_claims/', {
                     params: {
                         appType: this.appType,
                         date_from: this.dateFrom.toISOString().split('T')[0],
                         date_to: this.dateTo.toISOString().split('T')[0],
-                        page: ctx.currentPage,
+                        page: this.currentPage,
                     }
-                });
-                return promise.then((response) => {
+                }).then((response) => {
                     this.totalRows = response.data.count;
-                    return(response.data.results || []);
+
+                    if (more) {
+                        let items = response.data.results || [];
+                        this.items.push(...items);
+                    } else {
+                        this.items = response.data.results || [];
+                    }
+
+                    this.isBusy = false;
+                    this.loadMorePressed = false;
+                    this.$nextTick(function () {
+                        window.scrollTo(0,document.body.scrollHeight);
+                    });
                 });
             },
 
