@@ -8,6 +8,7 @@
                  empty-text="Заявки відсутні"
                  show-empty
                  ref="table"
+                 id="applications-table"
         >
             <template v-slot:table-busy>
                 <div class="text-center my-2">
@@ -35,7 +36,12 @@
 
         <b-row>
             <b-col class="my-1 d-flex justify-content-end">
-                <button class="btn btn-primary"
+                <button class="btn btn-secondary"
+                        @click="excelExport('applications-table', 'Заявки', 'applications.xls', false)"
+                        :disabled="isBusy"
+                >Експорт у Excel</button>
+
+                <button class="btn btn-primary ml-2"
                         @click="getItems(true)"
                         :disabled="isBusy"
                         v-if="isMoreBtnShowed">Завантажити ще</button>
@@ -57,9 +63,11 @@
 <script>
     import axios from 'axios';
     import AppDetails from './AppDetails.vue';
+    import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
         props: ['appType', 'dateFrom', 'dateTo'],
+        mixins: [ExcelMixin],
         components: {
             AppDetails
         },

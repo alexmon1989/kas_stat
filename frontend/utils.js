@@ -25,18 +25,20 @@ let tableToExcel = (function () {
             link.remove();
         };
 
-    return function (table, name, fileName) {
+    return function (table, name, fileName, removeLastTr=true) {
         if (!table.nodeType) table = document.getElementById(table);
 
         let clnTable = table.cloneNode(true);
 
         // Удаление последней строки
-        clnTable.rows[clnTable.rows.length - 1].remove();
+        if (removeLastTr) {
+            clnTable.rows[clnTable.rows.length - 1].remove();
+        }
 
         // Удаление тегов из ячеек
         for (let row of clnTable.rows) {
             for (let cell of row.cells) {
-                cell.innerText = strip_tags(cell.innerText);
+                cell.innerText = strip_tags(cell.innerText).trim();
             }
         }
 

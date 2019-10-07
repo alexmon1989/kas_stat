@@ -9,6 +9,7 @@
                  :current-page="currentPage"
                  :per-page="perPage"
                  ref="table"
+                 id="applications-table"
         >
             <template v-slot:table-busy>
                 <div class="text-center my-2">
@@ -34,6 +35,14 @@
             </template>
         </b-table>
 
+        <b-row>
+            <b-col class="my-1 d-flex justify-content-end">
+                <button class="btn btn-secondary"
+                        @click="excelExport('applications-table', 'Заявки', 'applications.xls', false)"
+                >Експорт у Excel</button>
+            </b-col>
+        </b-row>
+
         <b-row class="justify-content-center" v-if="totalRows > perPage">
             <b-col sm="7" md="6" class="my-1">
                 <b-pagination v-model="currentPage"
@@ -49,9 +58,11 @@
 <script>
     import axios from 'axios';
     import AppDetails from './AppDetails.vue';
+    import ExcelMixin from './../../mixins/ExcelMixin';
 
     export default {
         props: ['appType', 'objType', 'dateFrom', 'dateTo'],
+        mixins: [ExcelMixin],
         components: {
             AppDetails
         },
