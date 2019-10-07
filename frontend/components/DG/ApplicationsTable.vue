@@ -156,7 +156,7 @@
                 }
                 return app.oap.map(function (item) {
                     return item.oap_name
-                }).join(';')
+                }).join('; ')
             }
         }
     }

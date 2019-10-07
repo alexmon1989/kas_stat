@@ -1248,8 +1248,6 @@ class ObjTypesClaimsListView(generics.ListAPIView):
                     Prefetch('event_type'),
                 )
             ),
-        ).filter(
-            objtype_id__in=(1, 2)
         ).order_by('claim_number')
 
         # Дата від
@@ -1264,10 +1262,10 @@ class ObjTypesClaimsListView(generics.ListAPIView):
             obj_type_id = (1, 2)
         if app_type == 'claims_dg':
             cert_id = (3, 4)
-            obj_type_id = (1, 2)
+            obj_type_id = (3, 4)
         if app_type == 'registrations_ap':
             cert_id = (7,)
-            obj_type_id = (3, 4)
+            obj_type_id = (1, 2)
         if app_type == 'registrations_dg':
             cert_id = (7,)
             obj_type_id = (3, 4)

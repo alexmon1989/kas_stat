@@ -134,6 +134,7 @@
                 axios.get('/api/obj_types_claims/', {
                     params: {
                         appType: this.appType,
+                        objType: this.objType,
                         date_from: this.dateFrom.toISOString().split('T')[0],
                         date_to: this.dateTo.toISOString().split('T')[0],
                         page: this.currentPage,
@@ -169,7 +170,7 @@
                 }
                 return app.oap.map(function (item) {
                     return item.oap_name
-                }).join(';')
+                }).join('; ')
             }
         }
     }
