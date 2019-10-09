@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (ap, ap_statistics, ApClaimsListView, dg, dg_statistics, DgClaimsListView, ap_specialist_workload,
                     ap_specialist_workload_statistics, ap_specialist_workload_claims, dg_specialist_workload,
                     dg_specialist_workload_statistics, regions, regions_statistics, finances, obj_types, admin_services,
-                    duplicates, obj_types_statistics, ObjTypesClaimsListView, RegionsPersonsListView)
+                    duplicates, obj_types_statistics, ObjTypesClaimsListView, RegionsPersonsListView,
+                    ap_under_consideration, ap_under_consideration_statistics)
 
 
 urlpatterns = [
@@ -33,4 +34,7 @@ urlpatterns = [
 
     path('admin_services/', admin_services),
     path('duplicates/', duplicates),
+
+    path('ap_under_consideration/', ap_under_consideration),
+    path('api/statistics/ap_under_consideration/', ap_under_consideration_statistics)
 ]

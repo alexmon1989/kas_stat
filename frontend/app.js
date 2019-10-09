@@ -17,6 +17,7 @@ import Finances from './components/Finances/Finances.vue'
 import ObjTypes from './components/ObjTypes/ObjTypes.vue'
 import AdminServices from './components/AdminServices/AdminServices.vue'
 import Duplicates from './components/Duplicates/Duplicates.vue'
+import ApUnderConsideration from './components/ApUnderConsideration/ApUnderConsideration.vue'
 
 Vue.use(BootstrapVue);
 Vue.use(require('vue-moment'));
@@ -33,5 +34,6 @@ const app = new Vue({
         ObjTypes,
         AdminServices,
         Duplicates,
+        ApUnderConsideration,
     }
 });

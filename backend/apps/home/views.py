@@ -11,6 +11,10 @@ def ap(request):
     return render(request, 'home/ap.html')
 
 
+def ap_under_consideration(request):
+    return render(request, 'home/ap_under_consideration.html')
+
+
 @api_view(['GET'])
 def ap_statistics(request):
     # Фильтр БД по датам
@@ -61,6 +65,67 @@ def ap_statistics(request):
         "return_jur": return_jur,
         "canceled_phys": canceled_phys,
         "canceled_jur": canceled_jur,
+        "issued_phys": issued_phys,
+        "issued_jur": issued_jur,
+    })
+
+
+@api_view(['GET'])
+def ap_under_consideration_statistics(request):
+    # Фильтр БД по датам
+    statistics_queryset = StatisticsValues.objects.filter(
+        timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        timekey__fulldatealternatekey__lte=request.GET['date_to'],
+        objtype_id__in=(1, 2)
+    )
+    # Подано фіз.
+    applied_phys = statistics_queryset.filter(cert_id__in=(1, 2), legalkind_id=0).count()
+    # Подано юр.
+    applied_jur = statistics_queryset.filter(cert_id__in=(1, 2), legalkind_id=1).count()
+    # Зареєстровано фіз.
+    registered_phys = statistics_queryset.filter(cert_id=7, legalkind_id=0).count()
+    # Зареєстровано юр.
+    registered_jur = statistics_queryset.filter(cert_id=7, legalkind_id=1).count()
+    # Без розгляду фіз.
+    without_review_phys = statistics_queryset.filter(cert_id=22, legalkind_id=0).count()
+    # Без розгляду юр.
+    without_review_jur = statistics_queryset.filter(cert_id=22, legalkind_id=1).count()
+    # Відмова фіз.
+    refusal_phys = statistics_queryset.filter(cert_id=9, legalkind_id=0).count()
+    # Відмова юр.
+    refusal_jur = statistics_queryset.filter(cert_id=9, legalkind_id=1).count()
+    # Повернено фіз.
+    return_phys = statistics_queryset.filter(cert_id=13, legalkind_id=0).count()
+    # Повернено юр.
+    return_jur = statistics_queryset.filter(cert_id=13, legalkind_id=1).count()
+    # Відхилено фіз.
+    canceled_phys = statistics_queryset.filter(cert_id=11, legalkind_id=0).count()
+    # Відхилено юр.
+    canceled_jur = statistics_queryset.filter(cert_id=11, legalkind_id=1).count()
+    # На розгляді фіз.
+    under_consideration_phys = statistics_queryset.filter(cert_id=24, legalkind_id=0).count()
+    # На розгляді юр.
+    under_consideration_jur = statistics_queryset.filter(cert_id=24, legalkind_id=1).count()
+    # Видано фіз.
+    issued_phys = statistics_queryset.filter(cert_id=5, legalkind_id=0).aggregate(Sum('value'))['value__sum'] or 0
+    # Видано юр.
+    issued_jur = statistics_queryset.filter(cert_id=5, legalkind_id=1).aggregate(Sum('value'))['value__sum'] or 0
+
+    return Response({
+        "applied_phys": applied_phys,
+        "applied_jur": applied_jur,
+        "registered_phys": registered_phys,
+        "registered_jur": registered_jur,
+        "without_review_phys": without_review_phys,
+        "without_review_jur": without_review_jur,
+        "refusal_phys": refusal_phys,
+        "refusal_jur": refusal_jur,
+        "return_phys": return_phys,
+        "return_jur": return_jur,
+        "canceled_phys": canceled_phys,
+        "canceled_jur": canceled_jur,
+        "under_consideration_phys": under_consideration_phys,
+        "under_consideration_jur": under_consideration_jur,
         "issued_phys": issued_phys,
         "issued_jur": issued_jur,
     })
@@ -139,6 +204,12 @@ class ApClaimsListView(generics.ListAPIView):
             legalkind_id = 0
         elif app_type == 'canceled_jur':
             cert_id = (11,)
+            legalkind_id = 1
+        elif app_type == 'under_consideration_phys':
+            cert_id = (24,)
+            legalkind_id = 0
+        elif app_type == 'under_consideration_jur':
+            cert_id = (24,)
             legalkind_id = 1
         elif app_type == 'issued_phys':
             cert_id = (5,)
