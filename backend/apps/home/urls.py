@@ -3,7 +3,8 @@ from .views import (ap, ap_statistics, ApClaimsListView, dg, dg_statistics, DgCl
                     ap_specialist_workload_statistics, ap_specialist_workload_claims, dg_specialist_workload,
                     dg_specialist_workload_statistics, regions, regions_statistics, finances, obj_types, admin_services,
                     duplicates, obj_types_statistics, ObjTypesClaimsListView, RegionsPersonsListView,
-                    ap_under_consideration, ap_under_consideration_statistics)
+                    ap_under_consideration, ap_under_consideration_statistics, dg_under_consideration,
+                    dg_statistics_under_consideration)
 
 
 urlpatterns = [
@@ -36,5 +37,8 @@ urlpatterns = [
     path('duplicates/', duplicates),
 
     path('ap_under_consideration/', ap_under_consideration),
-    path('api/statistics/ap_under_consideration/', ap_under_consideration_statistics)
+    path('api/statistics/ap_under_consideration/', ap_under_consideration_statistics),
+
+    path('dg_under_consideration/', dg_under_consideration),
+    path('api/statistics/dg_under_consideration/', dg_statistics_under_consideration),
 ]

@@ -409,6 +409,22 @@ class DgClaimsListView(generics.ListAPIView):
             cert_id = (14,)
             legalkind_id = 1
             objtype_id = 4
+        elif app_type == 'alienation_under_consideration_phys':
+            cert_id = (25,)
+            legalkind_id = 0
+            objtype_id = 3
+        elif app_type == 'alienation_under_consideration_jur':
+            cert_id = (25,)
+            legalkind_id = 1
+            objtype_id = 3
+        elif app_type == 'using_under_consideration_phys':
+            cert_id = (25,)
+            legalkind_id = 0
+            objtype_id = 4
+        elif app_type == 'using_under_consideration_jur':
+            cert_id = (25,)
+            legalkind_id = 1
+            objtype_id = 4
 
         if date_from and date_to and app_type:
             try:
@@ -423,6 +439,81 @@ class DgClaimsListView(generics.ListAPIView):
                 raise exceptions.ParseError("Невірне значення параметру date_from")
 
         return queryset
+
+
+def dg_under_consideration(request):
+    return render(request, 'home/dg_under_consideration.html')
+
+
+@api_view(['GET'])
+def dg_statistics_under_consideration(request):
+    # Фильтр БД по датам
+    statistics_queryset = StatisticsValues.objects.filter(
+        timekey__fulldatealternatekey__gte=request.GET['date_from'],
+        timekey__fulldatealternatekey__lte=request.GET['date_to'],
+    )
+
+    alienation_applied_phys = statistics_queryset.filter(cert_id__in=(3, 4), legalkind_id=0, objtype_id=3).count()
+    alienation_applied_jur = statistics_queryset.filter(cert_id__in=(3, 4), legalkind_id=1, objtype_id=3).count()
+    using_applied_phys = statistics_queryset.filter(cert_id__in=(3, 4), legalkind_id=0, objtype_id=4).count()
+    using_applied_jur = statistics_queryset.filter(cert_id__in=(3, 4), legalkind_id=1, objtype_id=4).count()
+
+    alienation_registered_phys = statistics_queryset.filter(cert_id=8, legalkind_id=0, objtype_id=3).count()
+    alienation_registered_jur = statistics_queryset.filter(cert_id=8, legalkind_id=1, objtype_id=3).count()
+    using_registered_phys = statistics_queryset.filter(cert_id=8, legalkind_id=0, objtype_id=4).count()
+    using_registered_jur = statistics_queryset.filter(cert_id=8, legalkind_id=1, objtype_id=4).count()
+
+    alienation_without_review_phys = statistics_queryset.filter(cert_id=23, legalkind_id=0, objtype_id=3).count()
+    alienation_without_review_jur = statistics_queryset.filter(cert_id=23, legalkind_id=1, objtype_id=3).count()
+    using_without_review_phys = statistics_queryset.filter(cert_id=23, legalkind_id=0, objtype_id=4).count()
+    using_without_review_jur = statistics_queryset.filter(cert_id=23, legalkind_id=1, objtype_id=4).count()
+
+    alienation_refusal_phys = statistics_queryset.filter(cert_id=10, legalkind_id=0, objtype_id=3).count()
+    alienation_refusal_jur = statistics_queryset.filter(cert_id=10, legalkind_id=1, objtype_id=3).count()
+    using_refusal_phys = statistics_queryset.filter(cert_id=10, legalkind_id=0, objtype_id=4).count()
+    using_refusal_jur = statistics_queryset.filter(cert_id=10, legalkind_id=1, objtype_id=4).count()
+
+    alienation_return_phys = statistics_queryset.filter(cert_id=14, legalkind_id=0, objtype_id=3).count()
+    alienation_return_jur = statistics_queryset.filter(cert_id=14, legalkind_id=1, objtype_id=3).count()
+    using_return_phys = statistics_queryset.filter(cert_id=14, legalkind_id=0, objtype_id=4).count()
+    using_return_jur = statistics_queryset.filter(cert_id=14, legalkind_id=1, objtype_id=4).count()
+
+    alienation_under_consideration_phys = statistics_queryset.filter(cert_id=25, legalkind_id=0, objtype_id=3).count()
+    alienation_under_consideration_jur = statistics_queryset.filter(cert_id=25, legalkind_id=1, objtype_id=3).count()
+    using_under_consideration_phys = statistics_queryset.filter(cert_id=25, legalkind_id=0, objtype_id=4).count()
+    using_under_consideration_jur = statistics_queryset.filter(cert_id=25, legalkind_id=1, objtype_id=4).count()
+
+    return Response({
+        "alienation_applied_phys": alienation_applied_phys,
+        "alienation_applied_jur": alienation_applied_jur,
+        "using_applied_phys": using_applied_phys,
+        "using_applied_jur": using_applied_jur,
+
+        "alienation_registered_phys": alienation_registered_phys,
+        "alienation_registered_jur": alienation_registered_jur,
+        "using_registered_phys": using_registered_phys,
+        "using_registered_jur": using_registered_jur,
+
+        "alienation_without_review_phys": alienation_without_review_phys,
+        "alienation_without_review_jur": alienation_without_review_jur,
+        "using_without_review_phys": using_without_review_phys,
+        "using_without_review_jur": using_without_review_jur,
+
+        "alienation_refusal_phys": alienation_refusal_phys,
+        "alienation_refusal_jur": alienation_refusal_jur,
+        "using_refusal_phys": using_refusal_phys,
+        "using_refusal_jur": using_refusal_jur,
+
+        "alienation_return_phys": alienation_return_phys,
+        "alienation_return_jur": alienation_return_jur,
+        "using_return_phys": using_return_phys,
+        "using_return_jur": using_return_jur,
+
+        "alienation_under_consideration_phys": alienation_under_consideration_phys,
+        "alienation_under_consideration_jur": alienation_under_consideration_jur,
+        "using_under_consideration_phys": using_under_consideration_phys,
+        "using_under_consideration_jur": using_under_consideration_jur,
+    })
 
 
 def ap_specialist_workload(request):
