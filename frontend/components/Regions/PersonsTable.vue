@@ -37,12 +37,12 @@
                 <button class="btn btn-secondary"
                         @click="excelExport('persons-table', 'Особи', 'applications.xls', false)"
                         :disabled="isBusy"
-                >Експорт у Excel</button>
+                ><i class="fa fa-file-excel-o mr-2"></i>Експорт у Excel</button>
 
                 <button class="btn btn-primary ml-2"
                         @click="getItems(true)"
                         :disabled="isBusy"
-                        v-if="isMoreBtnShowed">Завантажити ще</button>
+                        v-if="isMoreBtnShowed"><i class="mr-2 fa fa-refresh"></i>Завантажити ще</button>
             </b-col>
         </b-row>
 

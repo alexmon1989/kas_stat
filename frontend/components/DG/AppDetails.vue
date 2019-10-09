@@ -3,7 +3,7 @@
         <b-table :fields="fields" :items="items" small></b-table>
 
         <div class="mt-3 d-flex justify-content-end">
-            <b-link class="btn btn-primary" :href="href" target="_blank">Бібліографічні дані заявки</b-link>
+            <b-link class="btn btn-primary" :href="href" target="_blank"><i class="fa fa-external-link mr-2"></i>Бібліографічні дані заявки</b-link>
         </div>
     </div>
 </template>

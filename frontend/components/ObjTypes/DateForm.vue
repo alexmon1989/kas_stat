@@ -14,7 +14,7 @@
                      :lang="lang"
                      :first-day-of-week="1"
         ></date-picker>
-        <b-button variant="primary" @click="$emit('send-date-form', from, to)">Завантажити</b-button>
+        <b-button variant="primary" @click="$emit('send-date-form', from, to)"><i class="fa fa-search mr-2"></i>Завантажити</b-button>
     </b-form>
 </template>
 

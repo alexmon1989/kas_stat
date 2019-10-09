@@ -28,7 +28,7 @@
                     <b-td colspan="9" variant="secondary" class="text-right">
                         <b-button size="sm"
                                   @click="excelExport('statistics-table', 'Статистика', 'statistics.xls')"
-                        >Експорт у Excel</b-button>
+                        ><i class="fa fa-file-excel-o mr-2"></i>Експорт у Excel</b-button>
                     </b-td>
                 </b-tr>
             </template>
