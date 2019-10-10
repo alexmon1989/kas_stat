@@ -15,8 +15,8 @@
                 </b-tr>
                 <b-tr>
                     <b-th rowspan="2">подано</b-th>
-                    <b-th colspan="5">розглянуто</b-th>
-                    <b-th rowspan="2">На розгляді</b-th>
+                    <b-th colspan="5">з них розглянуто</b-th>
+                    <b-th rowspan="2">з них на розгляді</b-th>
                 </b-tr>
                 <b-tr>
                     <b-th>Зареєстровано</b-th>
