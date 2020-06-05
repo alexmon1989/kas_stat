@@ -1,4 +1,4 @@
-Django==2.1.12
+Django==2.2.13
 django-debug-toolbar==2.0
 djangorestframework==3.10.3
 gunicorn==19.9.0
